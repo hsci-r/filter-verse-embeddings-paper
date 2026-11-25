@@ -52,7 +52,7 @@ The trainer computes and caches English teacher embeddings automatically. Checkp
 
 ## Data and experiments
 
-The corpus comes from [FILTER data](https://github.com/hsci-r/filter-data). Translations and word analyses were generated with **DeepSeek 3**. The paper uses 4,311,544 verse rows from 291,227 poems. Each precomputed embedding table contains 4,275,969 verse occurrences.
+The corpus comes from [FILTER data](https://github.com/hsci-r/filter-data). Translations and word analyses were generated with `unsloth/DeepSeek-R1-BF16`. The paper uses 4,311,544 verse rows from 291,227 poems. Each precomputed embedding table contains 4,275,969 verse occurrences.
 
 See [data and downloads](https://github.com/hsci-r/filter-verse-embeddings-paper/blob/main/docs/data.md), [embedding usage](https://github.com/hsci-r/filter-verse-embeddings-paper/blob/main/docs/embeddings.md), and [reproduction instructions](https://github.com/hsci-r/filter-verse-embeddings-paper/blob/main/docs/reproduce.md). The repository includes 20 experiment configurations, frozen splits, saved results and figures.
 

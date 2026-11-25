@@ -26,14 +26,18 @@ def copy_file(source, target):
 
 def prepare(args):
     old_plan = json.loads(args.original_plan.read_text())
-    old_state = json.loads(args.original_plan.with_name('zenodo_state.json').read_text())
+    state_path = args.original_state or args.original_plan.with_name('zenodo_state.json')
+    old_state = json.loads(state_path.read_text())
+    published_records = old_state.get('deposits') or old_state.get('records')
+    if not published_records:
+        raise ValueError('The previous publication state has no record identifiers')
     revision = subprocess.check_output(['git', 'rev-parse', args.code_revision + '^{commit}'],
                                        cwd=REPO, text=True).strip()
     completed = args.output / 'archives/upload_plan.json'
     if completed.exists():
         previous = json.loads(completed.read_text())
         if previous['code_revision'] != revision or not all(
-                g.get('record_id') == old_state['deposits'][n]['id'] for n, g in previous['deposits'].items()):
+                g.get('record_id') == published_records[n]['id'] for n, g in previous['deposits'].items()):
             raise ValueError('Existing prepared update belongs to a different revision or record set')
         print('Using prepared documentation update: ' + str(completed), flush=True)
         return
@@ -61,11 +65,13 @@ def prepare(args):
             original = json.loads(path.read_text())
             write_json(path, dict(path=original['path'], bytes=original['bytes'], sha256=original['sha256'],
                 upstream_repository=SOURCE,
-                distribution='https://zenodo.org/records/' + str(old_state['deposits'][group]['id'])))
+                distribution='https://zenodo.org/records/' + str(published_records[group]['id'])))
         if group == 'data':
             readiness_path = staged / group / 'readiness.json'
             readiness = json.loads(readiness_path.read_text())
             readiness['word_order_equivalence'] = 'Original training-order mapping is unavailable'
+            readiness.pop('translation_model_generation', None)
+            readiness['translation_model'] = 'unsloth/DeepSeek-R1-BF16'
             write_json(readiness_path, readiness)
         manifest_path = staged / group / 'manifest.json'
         manifest = json.loads(manifest_path.read_text())
@@ -86,7 +92,7 @@ def prepare(args):
                     '--code-revision', revision, '--hf-revision', old_plan['hf_revision']], check=True)
     plan = json.loads(completed.read_text())
     for name, group in plan['deposits'].items():
-        saved = old_state['deposits'][name]
+        saved = published_records[name]
         if not saved['published']:
             raise ValueError('Expected an already published record: ' + name)
         group['record_id'] = saved['id']
@@ -109,10 +115,13 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--assets', type=Path, required=True)
     parser.add_argument('--original-plan', type=Path, required=True)
+    parser.add_argument('--original-state', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--code-revision', default='HEAD')
     args = parser.parse_args()
     args.assets, args.original_plan, args.output = args.assets.resolve(), args.original_plan.resolve(), args.output.resolve()
+    if args.original_state is not None:
+        args.original_state = args.original_state.resolve()
     prepare(args)
 
 

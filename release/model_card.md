@@ -55,7 +55,7 @@ Pass a downloaded model directory for offline use. Supply a Hugging Face `revisi
 
 The model produces 768-dimensional embeddings using a 12-layer Transformer and a verse-balanced 32k SentencePiece tokenizer. It accepts up to 128 tokens per window. The selected checkpoint is from epoch 200, trained with loss weights 0.45 verse alignment, 0.45 word alignment and 0.10 masked language modelling.
 
-English targets use [all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2) and [ModernBERT-base](https://huggingface.co/answerdotai/ModernBERT-base). Translations and word analyses were generated with **DeepSeek 3** from the [FILTER corpus](https://github.com/hsci-r/filter-data).
+English targets use [all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2) and [ModernBERT-base](https://huggingface.co/answerdotai/ModernBERT-base). Translations and word analyses were generated with `unsloth/DeepSeek-R1-BF16` from the [FILTER corpus](https://github.com/hsci-r/filter-data).
 
 Isolated encoding pools each verse separately, including its boundary tokens. Contextual encoding packs consecutive verses from a poem and pools each verse's content tokens. Both apply the learned projection and L2 normalization. An overlong verse is truncated; an empty contextual verse returns a zero vector.
 

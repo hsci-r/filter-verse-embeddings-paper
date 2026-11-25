@@ -18,8 +18,8 @@ Resources for **Leveraging LLM-Generated Translations to Guide Verse Representat
 
 Download the following files from the [data archive](https://zenodo.org/records/24536154) into `artifacts/data/`:
 
-- `verses_translated.parquet`: DeepSeek 3 verse translations.
-- `word_analysis.parquet`: DeepSeek 3 word analyses and English translations, with 14,618,529 rows.
+- `verses_translated.parquet`: unsloth/DeepSeek-R1-BF16 verse translations.
+- `word_analysis.parquet`: unsloth/DeepSeek-R1-BF16 word analyses and English translations, with 14,618,529 rows.
 - `paper_verses.parquet`: the cleaned paper input, with 4,311,544 verse rows from 291,227 poems.
 - `filter-verse-embeddings-data-support-v1.0.0.tar.gz`: splits, retrieval pairs, tokenizers, corpus metadata and cleaning records. Extract it into the same directory.
 
