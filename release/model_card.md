@@ -12,8 +12,6 @@ language:
   - fi
   - et
 pipeline_tag: sentence-similarity
-model-index:
-  - name: FILTER verse embeddings
 ---
 
 # FILTER verse embeddings

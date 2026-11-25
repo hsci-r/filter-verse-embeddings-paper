@@ -24,6 +24,9 @@ def main():
     validation = json.loads((root / 'validation.json').read_text())
     if validation.get('status') != 'passed':
         raise ValueError('Model validation has not passed')
+    card_check = json.loads((root / 'model_card_validation.json').read_text())
+    if card_check.get('status') != 'passed' or card_check['card_sha256'] != digest(root / 'README.md'):
+        raise ValueError('Model card has not passed Hub metadata validation')
     cli_record = Path(__file__).resolve().parent / 'cli_validation.json'
     cli = json.loads(cli_record.read_text())
     if not cli or any(item['exit_code'] for item in cli.values()):
