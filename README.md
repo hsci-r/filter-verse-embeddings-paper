@@ -36,6 +36,20 @@ contextual = model.encode_poem(verses)
 
 Use a local model directory for offline inference. The package provides the model's custom architecture and pooling.
 
+## Train the model
+
+Training combines masked language modelling with alignment to English verse and word representations. The selected configuration trains from scratch for 200 epochs with batch size 32 and learning rate 2.5e-4. All [20 experiment configurations](https://github.com/hsci-r/filter-verse-embeddings-paper/tree/main/configs/experiments) are included.
+
+Follow the [data instructions](https://github.com/hsci-r/filter-verse-embeddings-paper/blob/main/docs/data.md) to place the paper input and tokenizer under `artifacts/data/`. Word-supervised configurations also require `artifacts/data/word_analysis_training.parquet` with the original training IDs and row order; that table is unavailable in this release. With the required inputs, run from the repository root in a compute allocation:
+
+```bash
+pip install '.[reproduction]'
+python -m filter_verse_embeddings.training \
+  --config configs/experiments/verse_balanced_v0p45_w0p45_mlm0p10.yaml
+```
+
+The trainer computes and caches English teacher embeddings automatically. Checkpoints are saved under `artifacts/checkpoints/verse_balanced_v0p45_w0p45_mlm0p10/`. See [training and evaluation details](https://github.com/hsci-r/filter-verse-embeddings-paper/blob/main/docs/reproduce.md) for input requirements, settings and reproducibility limits.
+
 ## Data and experiments
 
 The corpus comes from [FILTER data](https://github.com/hsci-r/filter-data). Translations and word analyses were generated with **DeepSeek 3**. The paper uses 4,311,544 verse rows from 291,227 poems. Each precomputed embedding table contains 4,275,969 verse occurrences.
