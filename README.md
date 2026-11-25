@@ -4,8 +4,6 @@ Code and experiment configurations for **Leveraging LLM-Generated Translations t
 
 The selected model learns 768-dimensional verse representations using masked language modelling and alignment to English teacher embeddings. It uses a verse-balanced 32k SentencePiece tokenizer, loss weights 0.45 verse / 0.45 word / 0.10 MLM, and the checkpoint after 200 epochs.
 
-Release preparation is in progress. Source and saved paper results are available here; the Hugging Face model files and permanent Zenodo records will be linked after packaging and validation finish. See the reproduction notes for remaining provenance limitations.
-
 ## Use the model
 
 Install this package in an environment with PyTorch:
@@ -31,7 +29,6 @@ print(isolated.shape, contextual.shape)  # (2, 768), (2, 768)
 
 Use a local model directory in place of the Hub ID for offline inference. Pass an immutable Hub `revision` to reproduce a particular release. The encoder has a custom architecture and loader; use this package to obtain the published projections and pooling behavior.
 
-Isolated encoding pools all non-padding sequence tokens, including BOS/EOS. Contextual encoding pools only the tokens belonging to each verse. Contextual windows stay within a poem and have at most 128 tokens including special tokens. Long poems use consecutive non-overlapping windows; overlong individual verses are truncated. Output vectors are projected and L2-normalized. A poem vector can be formed by averaging its verse vectors.
 
 ## Reproduce the paper
 
