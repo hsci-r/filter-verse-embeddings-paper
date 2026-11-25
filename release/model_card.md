@@ -16,21 +16,21 @@ pipeline_tag: sentence-similarity
 
 # FILTER verse embeddings
 
-The selected model from **Leveraging LLM-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry**, by Lidia Pivovarova, Tinka Rainio and Eetu Mäkelä. Accepted to **Findings of EACL 2027**; an ACL Anthology identifier has not yet been assigned.
+Resources for **Leveraging LLM-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry**, by Lidia Pivovarova, Tinka Rainio and Eetu Mäkelä. Accepted to **Findings of EACL 2027**.
 
-[Code and reproduction instructions](https://github.com/hsci-r/filter-verse-embeddings-paper).
+## Resources
 
-## Model and training
+| Resource | Link |
+| --- | --- |
+| Code and instructions | [GitHub](https://github.com/hsci-r/filter-verse-embeddings-paper) |
+| Model and tokenizer | [Hugging Face](https://huggingface.co/University-of-Helsinki/filter-verse-embeddings) |
+| Permanent code archive | [Zenodo](https://zenodo.org/records/24536150) |
+| Permanent model archive | [Zenodo](https://zenodo.org/records/24536152) |
+| Translations, word analyses and paper data | [Zenodo](https://zenodo.org/records/24536154) |
+| Isolated and contextual embeddings | [Zenodo](https://zenodo.org/records/24536159) |
+| Original corpus | [FILTER data](https://github.com/hsci-r/filter-data) |
 
-The encoder returns 768-dimensional verse embeddings. It is a custom 12-layer pre-norm Transformer with hidden size 768, 12 attention heads, feed-forward size 3072, a final layer normalization, and a 128-token limit. It uses the supplied verse-balanced 32k SentencePiece tokenizer. The released checkpoint is from epoch 200, with training loss weights 0.45 verse alignment, 0.45 word alignment and 0.10 masked language modelling. Training dropout was 0.5.
-
-English sentence targets come from `sentence-transformers/all-mpnet-base-v2`; word targets come from `answerdotai/ModernBERT-base`. Translations and word analyses were generated with DeepSeek 3. The exact upstream model revisions were not retained in the saved training configuration.
-
-The paper dataset has 4,311,544 verse rows from 291,227 poems. The frozen training/development/test partitions have 232,793 / 29,109 / 29,325 poems. This release contains the trained encoder, its learned verse projection, the word projection when present, the tied MLM head, and the matching tokenizer. Optimizer state is omitted.
-
-## Usage
-
-Install the package from the accompanying code repository:
+## Use the model
 
 ```bash
 git clone https://github.com/hsci-r/filter-verse-embeddings-paper.git
@@ -49,18 +49,36 @@ contextual = model.encode_poem(verses)
 # Both arrays: float32, shape (2, 768).
 ```
 
-For offline use, pass a downloaded model directory. For a fixed release, supply `revision` with the Hub commit hash. A minimal installable copy of the loader is also included in this model repository; `pip install .` from a local snapshot installs it.
+Pass a downloaded model directory for offline use. Supply a Hugging Face `revision` to select a fixed release.
 
-This model uses its own loader. Loading weights into a stock BERT architecture or changing the pooling rule changes the representations. Isolated encoding averages all non-padding tokens, including BOS/EOS. Contextual encoding packs consecutive verses from one poem into non-overlapping windows and averages only each verse's content tokens. Both apply the learned verse projection and L2 normalization. A single overlong verse is truncated to fit the window. An empty contextual verse produces a zero vector.
+## Model
 
-## Evaluation and use
+The model produces 768-dimensional embeddings using a 12-layer Transformer and a verse-balanced 32k SentencePiece tokenizer. It accepts up to 128 tokens per window. The selected checkpoint is from epoch 200, trained with loss weights 0.45 verse alignment, 0.45 word alignment and 0.10 masked language modelling.
 
-On the frozen formulaic-verse retrieval benchmark, the selected model has P@1 **0.4091714003** and UAP **0.5553479680**. The benchmark has 43,483 queries and 145,150 directed positive edges, defined by English-translation similarity strictly above 0.99. Intrinsic masked-language-model loss is **1.7873176475**, with evaluation seed 13 and batch size 256. Full settings and saved results are in the code repository.
+English targets use [all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2) and [ModernBERT-base](https://huggingface.co/answerdotai/ModernBERT-base). Translations and word analyses were generated with **DeepSeek 3** from the [FILTER corpus](https://github.com/hsci-r/filter-data).
 
-The intended use is research on verse similarity and Finnic oral poetry. Evaluation covers the paper's corpus and tasks; performance on other languages, genres and general sentence embedding tasks has not been established. English teacher representations and generated translations can carry errors into the learned representations.
+Isolated encoding pools each verse separately, including its boundary tokens. Contextual encoding packs consecutive verses from a poem and pools each verse's content tokens. Both apply the learned projection and L2 normalization. An overlong verse is truncated; an empty contextual verse returns a zero vector.
 
-## Licence and citation
+## Evaluation
 
-Model weights and tokenizer: **CC BY 4.0** (`LICENSE`). Give appropriate credit, link to the licence and indicate changes. Loader code: **Apache-2.0** (`LICENSE_CODE`). Please cite the paper when using the model or tokenizer; the requested citation is in `CITATION.cff`.
+On the paper's retrieval benchmark: **P@1 0.4092**, **UAP 0.5553**. Masked-language-model loss: **1.7873**. See [settings and saved results](https://github.com/hsci-r/filter-verse-embeddings-paper/blob/main/docs/reproduce.md).
 
-`manifest.json` and `SHA256SUMS` identify the package files. `validation.json` records comparison with the original checkpoint and exporter. Zenodo archive links will be added after the deposits are published.
+The model is intended for research on Finnic oral poetry. Generated translations and English teacher representations can introduce errors; evaluation covers the paper's corpus and tasks.
+
+## Licence
+
+Code: [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0). Model weights, tokenizer, generated translations, word analyses and embeddings: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Original corpus text and metadata retain the terms described in [FILTER data](https://github.com/hsci-r/filter-data#license).
+
+## Citation
+
+Please cite the paper when using these resources:
+
+```bibtex
+@inproceedings{pivovarova-etal-2027-leveraging,
+  title = "Leveraging {LLM}-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry",
+  author = "Pivovarova, Lidia and Rainio, Tinka and M{\"a}kel{\"a}, Eetu",
+  booktitle = "Findings of the Association for Computational Linguistics: {EACL} 2027",
+  year = "2027",
+  publisher = "Association for Computational Linguistics"
+}
+```

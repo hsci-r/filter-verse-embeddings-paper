@@ -1,4 +1,4 @@
-"""Attach canonical FILTER/Allas verse ids to Paper verse metadata."""
+"""Attach canonical FILTER verse ids to Paper verse metadata."""
 from __future__ import annotations
 import html
 import re

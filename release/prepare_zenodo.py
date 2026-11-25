@@ -66,16 +66,14 @@ def main():
     archive(support, assets / 'data', [p for p in (assets / 'data').rglob('*')
         if p.is_file() and str(p.relative_to(assets / 'data')) not in direct_data])
     groups = {
-        'code': [code, code.with_name(code.name + '.manifest.json')],
-        'model': [model],
-        'data': [assets / 'data' / name for name in direct_data] + [support],
+        'code': [code, code.with_name(code.name + '.manifest.json'), repo / 'README.md', repo / 'CITATION.bib'],
+        'model': [model, assets / 'model/README.md', assets / 'model/CITATION.bib'],
+        'data': [assets / 'data' / name for name in direct_data] + [support, assets / 'data/README.md', assets / 'data/CITATION.bib'],
         'embeddings': [p for p in (assets / 'embeddings').iterdir() if p.is_file()],
     }
     plan = dict(version='1.0.0', code_revision=args.code_revision, hf_revision=args.hf_revision, deposits={})
     for group, paths in groups.items():
         metadata = json.loads((repo / 'release/zenodo' / (group + '.json')).read_text())
-        metadata['description'] += ('<p>Code revision: <code>' + args.code_revision +
-            '</code>. Hugging Face revision: <code>' + args.hf_revision + '</code>.</p>')
         rows = [dict(filename=p.name, path=str(p), **fingerprints(p)) for p in sorted(paths)]
         if len({r['filename'] for r in rows}) != len(rows):
             raise ValueError('Duplicate Zenodo filename')

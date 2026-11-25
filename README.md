@@ -1,44 +1,61 @@
 # FILTER verse embeddings
 
-Code and experiment configurations for **Leveraging LLM-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry**, by Lidia Pivovarova, Tinka Rainio and Eetu Mäkelä. Accepted for publication in **Findings of the Association for Computational Linguistics: EACL 2027**. The ACL Anthology URL will be added after publication.
+Resources for **Leveraging LLM-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry**, by Lidia Pivovarova, Tinka Rainio and Eetu Mäkelä. Accepted to **Findings of EACL 2027**.
 
-The selected model learns 768-dimensional verse representations using masked language modelling and alignment to English teacher embeddings. It uses a verse-balanced 32k SentencePiece tokenizer, loss weights 0.45 verse / 0.45 word / 0.10 MLM, and the checkpoint after 200 epochs.
+## Resources
+
+| Resource | Link |
+| --- | --- |
+| Code and instructions | [GitHub](https://github.com/hsci-r/filter-verse-embeddings-paper) |
+| Model and tokenizer | [Hugging Face](https://huggingface.co/University-of-Helsinki/filter-verse-embeddings) |
+| Permanent code archive | [Zenodo](https://zenodo.org/records/24536150) |
+| Permanent model archive | [Zenodo](https://zenodo.org/records/24536152) |
+| Translations, word analyses and paper data | [Zenodo](https://zenodo.org/records/24536154) |
+| Isolated and contextual embeddings | [Zenodo](https://zenodo.org/records/24536159) |
+| Original corpus | [FILTER data](https://github.com/hsci-r/filter-data) |
 
 ## Use the model
 
-Install this package in an environment with PyTorch:
+Install the package in an environment with PyTorch:
 
 ```bash
 pip install .
 ```
 
-The model and matching tokenizer are published together at [University-of-Helsinki/filter-verse-embeddings](https://huggingface.co/University-of-Helsinki/filter-verse-embeddings):
-
 ```python
 from filter_verse_embeddings import FilterVerseEncoder
 
 model = FilterVerseEncoder.from_pretrained(
-    "University-of-Helsinki/filter-verse-embeddings",
-    revision="f046b4fe36b1ba0c01652c723a34c26da1caaece",
-    device="cpu",
+    "University-of-Helsinki/filter-verse-embeddings", device="cpu"
 )
 verses = ["Metsä tuulessa laulaa.", "Joki kantaa illan valon."]
 isolated = model.encode_verses(verses)
 contextual = model.encode_poem(verses)
-print(isolated.shape, contextual.shape)  # (2, 768), (2, 768)
+# Both arrays have shape (2, 768).
 ```
 
-Use a local model directory in place of the Hub ID for offline inference. Pass an immutable Hub `revision` to reproduce a particular release. The encoder has a custom architecture and loader; use this package to obtain the published projections and pooling behavior.
+Use a local model directory for offline inference. The package provides the model's custom architecture and pooling.
 
+## Data and experiments
 
-## Reproduce the paper
+The corpus comes from [FILTER data](https://github.com/hsci-r/filter-data). Translations and word analyses were generated with **DeepSeek 3**. The paper uses 4,311,544 verse rows from 291,227 poems. Each precomputed embedding table contains 4,275,969 verse occurrences.
 
-See [docs/reproduce.md](docs/reproduce.md). The 20 final experiment configurations are in `configs/experiments/`, with their saved retrieval, masked-language-model and contextual/isolated classification results in `results/`. Frozen split lists are in `data/splits/`.
+See [data and downloads](https://github.com/hsci-r/filter-verse-embeddings-paper/blob/main/docs/data.md), [embedding usage](https://github.com/hsci-r/filter-verse-embeddings-paper/blob/main/docs/embeddings.md), and [reproduction instructions](https://github.com/hsci-r/filter-verse-embeddings-paper/blob/main/docs/reproduce.md). The repository includes 20 experiment configurations, frozen splits, saved results and figures.
 
-The exact cleaned paper data contains 291,227 poems and 4,311,544 rows. Existing public translation and embedding Parquets use canonical corpus IDs and may have different coverage. The data and embedding manifests describe their respective row sets. Allas source URLs and recorded sizes are listed in [data/allas_sources.json](data/allas_sources.json); Zenodo version links will be added after the deposits are created.
+## Licence
 
-## Licence and citation
+Code: [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0). Model weights, tokenizer, generated translations, word analyses and embeddings: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Original corpus text and metadata retain the terms described in [FILTER data](https://github.com/hsci-r/filter-data#license).
 
-The code is licensed under **Apache-2.0**. The published best-model weights, matching tokenizer, generated translations, word analyses and computed embeddings are licensed under **CC BY 4.0**, requiring appropriate attribution, a licence link and an indication of changes. Original corpus text and upstream metadata retain their applicable source terms.
+## Citation
 
-Please cite the paper when using the code, model, tokenizer, translations or embeddings. The requested citation is recorded in [CITATION.cff](CITATION.cff). Publication in the ACL Anthology is pending; no paper DOI or Anthology identifier is asserted here.
+Please cite the paper when using these resources:
+
+```bibtex
+@inproceedings{pivovarova-etal-2027-leveraging,
+  title = "Leveraging {LLM}-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry",
+  author = "Pivovarova, Lidia and Rainio, Tinka and M{\"a}kel{\"a}, Eetu",
+  booktitle = "Findings of the Association for Computational Linguistics: {EACL} 2027",
+  year = "2027",
+  publisher = "Association for Computational Linguistics"
+}
+```

@@ -1,7 +1,7 @@
 {
   "status": "passed",
   "validator": "https://huggingface.co/api/validate-yaml",
-  "card_sha256": "e5b3754d6e80ae6d6f33ff82915d927d53f4807a37c77448e94585e182cceec2",
+  "card_sha256": "22832650ba3e00c4bd82b946f2ed59e997f78a2e8abc6b917b102ee3061a68e4",
   "response": {
     "errors": [],
     "warnings": []

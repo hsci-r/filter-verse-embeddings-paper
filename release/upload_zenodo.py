@@ -36,6 +36,8 @@ def request(session, method, url, **kwargs):
             time.sleep(2 ** attempt)
     if not response.ok:
         raise RuntimeError(f'Zenodo {response.status_code}: {response.text[:2500]}')
+    if response.status_code == 204:
+        return None
     return response.json()
 
 

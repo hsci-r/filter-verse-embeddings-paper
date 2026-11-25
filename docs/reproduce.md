@@ -1,59 +1,76 @@
-# Reproducing the paper experiments
+# Reproducing the experiments
 
-Use the frozen poem split assignments and benchmark rather than drawing new partitions or mining new positives. Install reproduction dependencies with `pip install '.[reproduction]'`. Downloads, preprocessing, model inference, training and evaluation should run in a suitable compute allocation; the reference runs used Slurm.
+## Resources
 
-## Artifacts and paths
+| Resource | Link |
+| --- | --- |
+| Code and instructions | [GitHub](https://github.com/hsci-r/filter-verse-embeddings-paper) |
+| Model and tokenizer | [Hugging Face](https://huggingface.co/University-of-Helsinki/filter-verse-embeddings) |
+| Permanent code archive | [Zenodo](https://zenodo.org/records/24536150) |
+| Permanent model archive | [Zenodo](https://zenodo.org/records/24536152) |
+| Translations, word analyses and paper data | [Zenodo](https://zenodo.org/records/24536154) |
+| Isolated and contextual embeddings | [Zenodo](https://zenodo.org/records/24536159) |
+| Original corpus | [FILTER data](https://github.com/hsci-r/filter-data) |
 
-Place the data deposit under `artifacts/data/` and the selected model under `artifacts/model/`. The expected exact paper input is `artifacts/data/paper_verses.parquet`; tokenizers are `artifacts/data/tokenizers/{standard,verse_balanced}/tokenizer.model`. Keep the public translation and word-analysis Parquets alongside this exact paper snapshot. The original ordered word table expected by training is `artifacts/data/word_analysis_training.parquet`.
+## Setup and inputs
 
-Before adapting the public word-analysis table, verify its schema and row-order mapping to the training table. The word teacher contextualizes consecutive rows in stitched chunks, so reordering rows can change supervision. If the schemas differ, use the recorded adapter supplied with the verified data package. Do not silently replace inputs or use a new translation run.
+```bash
+pip install '.[reproduction]'
+```
 
-The selected public word-analysis Parquet has 14,618,529 rows with corpus coordinates `p_id`, `v_pos`, `w_pos`, and `w_id`. Its English translations and analyses are preserved unchanged. It lacks the training reader's string `poem_id`, `word_id`, `word_position` and `original_form` columns. The identity mapping and original training-row order still need verification before the retraining input can be declared complete.
+Follow the [data download instructions](data.md) and place the model files from [Hugging Face](https://huggingface.co/University-of-Helsinki/filter-verse-embeddings) in `artifacts/model/`. Run downloads, preprocessing, inference, training and evaluation in a compute allocation.
 
-The supplied split manifest records 232,793 / 29,109 / 29,325 poems and 3,441,993 / 438,303 / 431,248 verse rows for train / development / test. Keep 4,490 retained unassigned translation rows, including their nullable positions. The cleaning rule excludes a poem only when more than 50 percent of its translation rows lack source positions.
+Use the released split assignments and retrieval pairs. The cleaning rule excludes a poem when more than 50% of its translated rows lack source positions. The retained 4,490 unassigned rows keep their nullable positions.
 
-The public isolated and contextual embedding tables each contain 4,275,969 rows, with columns `p_id`, `pos`, `v_id` and `embedding`. The embedding column stores lists of 768 float32 values. These corpus occurrence coordinates differ from the paper's string IDs. Join `p_id` to `metadata/poems.parquet` (`p_id` to archival `nro`); `v_id` identifies a verse text and can recur in multiple occurrences. The audit verified that the two tables have exactly the same occurrence IDs, with no null IDs or duplicate `(p_id, pos)` coordinates. Their row orders differ. Join by `(p_id, pos, v_id)` or use `row_alignment.parquet`, whose zero-based `isolated_row` and `contextual_row` columns map the two original files. Both original Parquets are preserved unchanged. The full audit is in `release/embedding_validation.json`.
+## Reproducibility limits
+
+The trained model, matching tokenizer, paper input, splits, retrieval pairs, precomputed embeddings and saved evaluation results are included. The original ordered word-supervision input, exact upstream model revisions and complete training environment are unavailable. The public word-analysis table uses different IDs and does not establish the original training-row order; consecutive word rows affect contextual teacher targets. Exact word-supervised retraining therefore requires information absent from this release.
+
+The figure files are included. The original numeric matrices for the qualitative verse heatmaps are unavailable. The validation environment describes release checks, rather than the original training environment.
 
 ## Training
-
-Run from the repository root:
 
 ```bash
 python -m filter_verse_embeddings.training \
   --config configs/experiments/verse_balanced_v0p45_w0p45_mlm0p10.yaml
 ```
 
-`configs/experiments.tsv` lists all 15 main configurations and five FinEst-tokenizer initialization ablations. They retain the saved numerical training settings: seed 42, 200 epochs, learning rate 2.5e-4, dropout 0.5, batch size 32, sequence length 128, temperature 0.05, word loss scale 10, weight decay 0.01 and gradient clipping 0.25. The sentence teacher is `sentence-transformers/all-mpnet-base-v2`; the word teacher is `answerdotai/ModernBERT-base`.
+`configs/experiments.tsv` lists 15 main configurations and five tokenizer-initialization ablations. Shared settings: seed 42, 200 epochs, learning rate 2.5e-4, dropout 0.5, batch size 32, sequence length 128, temperature 0.05, word-loss scale 10, weight decay 0.01 and gradient clipping 0.25. Teachers: `sentence-transformers/all-mpnet-base-v2` and `answerdotai/ModernBERT-base`. Tokenizers are supplied in the data archive; use those files for model comparisons.
 
-Teacher targets are cached under `artifacts/cache/`. The original upstream revision identifiers and complete training environment were not recorded in the saved YAML configurations. A release validation environment is supplied separately after verification; it is not presented as the original training environment. Hardware and library differences may affect retraining results.
+## Export and retrieval
 
-## Export and evaluation
-
-Export test embeddings from a recreated training run with:
+For a training run with the required inputs:
 
 ```bash
 python -m filter_verse_embeddings.export_evaluation \
   --config configs/experiments/verse_balanced_v0p45_w0p45_mlm0p10.yaml \
   --checkpoint artifacts/checkpoints/verse_balanced_v0p45_w0p45_mlm0p10/epoch_200.pt
-```
 
-The retrieval evaluator consumes a run directory containing `embeddings/test_filter.npy` and `metadata/test_metadata.parquet`:
-
-```bash
 python -m filter_verse_embeddings.evaluation.retrieval \
   --model-run artifacts/runs/verse_balanced_v0p45_w0p45_mlm0p10 \
   --benchmark-pairs artifacts/data/benchmarks/retrieval/positive_pairs.parquet \
   --output-path artifacts/results/retrieval.json
 ```
 
-The final benchmark uses English similarity strictly above 0.99, with 43,483 queries and 145,150 directed positive edges. It ranks original-language candidates and masks the query itself. Keep the saved positive pairs and candidate ordering fixed. The best saved result is P@1 0.4091714003 and UAP 0.5553479680.
+The evaluator expects `embeddings/test_filter.npy` and `metadata/test_metadata.parquet` in the run directory. The benchmark contains 43,483 queries and 145,150 directed positive edges, defined by English-translation similarity strictly above 0.99. It ranks original-language candidates and masks the query itself. The selected model scores P@1 **0.4091714003** and UAP **0.5553479680**.
 
-For intrinsic MLM evaluation use `python -m filter_verse_embeddings.evaluation.mlm --help` with test split, seed 13, batch size 256 and packed poem windows. The selected model's saved loss is 1.7873176475 over 452,947 masked tokens. Changing batching can change the stochastic masks even with the same seed.
+## Other evaluations and figures
 
-For poem-type classification use `python -m filter_verse_embeddings.evaluation.poem_types --help`. Set minimum train support to 51 and exclude the `erab_orig` prefix. The saved task contains 26 labels and 112,706 / 14,127 / 14,267 labelled poems. Public type-table IDs and columns must be adapted explicitly to the archived task assignments.
+- MLM: `python -m filter_verse_embeddings.evaluation.mlm --help`. Use the test split, seed 13, batch size 256 and packed poem windows. Saved loss: **1.7873176475**, over 452,947 masked tokens. Batching affects stochastic masks.
+- Poem types: `python -m filter_verse_embeddings.evaluation.poem_types --help`. Minimum training support is 51; exclude `erab_orig`. The saved task has 26 labels and 112,706 / 14,127 / 14,267 labelled poems. Adapt public table IDs to the supplied task assignments.
+- Embedding table joins: see [embedding usage](embeddings.md).
+- Retrieval and MLM figures: use the `figures.retrieval` and `figures.mlm` modules with saved results. The qualitative heatmaps compare `skvr07106440` and `skvr07104320`.
 
-## Tokenizers and figures
+## Citation
 
-`tokenizers.train` and `tokenizers.balance` retain the unigram SentencePiece training and verse-balancing algorithms. Tokenizer retraining requires the original sampling settings and dialect/place tables; use the distributed tokenizer bytes for inference and model comparisons.
+Please cite the paper when using these resources:
 
-`figures.retrieval` and `figures.mlm` generate the numerical overview figures from saved result tables. The released PNG/PDF figures and per-model JSON results preserve the reported outputs. The qualitative heatmaps show `skvr07106440` versus `skvr07104320`; their original small numeric source matrices still need to be included with the final figure-reproduction recipe.
+```bibtex
+@inproceedings{pivovarova-etal-2027-leveraging,
+  title = "Leveraging {LLM}-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry",
+  author = "Pivovarova, Lidia and Rainio, Tinka and M{\"a}kel{\"a}, Eetu",
+  booktitle = "Findings of the Association for Computational Linguistics: {EACL} 2027",
+  year = "2027",
+  publisher = "Association for Computational Linguistics"
+}
+```
