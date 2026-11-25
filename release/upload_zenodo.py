@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import time
 from urllib.parse import quote, urlparse
 
 import requests
@@ -16,7 +17,23 @@ USER_AGENT = 'FILTER-paper-release/1.0 (+https://github.com/hsci-r/filter-verse-
 def request(session, method, url, **kwargs):
     if urlparse(url).scheme != 'https' or urlparse(url).netloc != 'zenodo.org':
         raise ValueError('Unexpected Zenodo API link')
-    response = session.request(method, url, timeout=(30, 600), **kwargs)
+    # Retry read-only requests only. A timed-out POST may already have created
+    # or published a record, and a streamed PUT must not be replayed blindly.
+    attempts = 3 if method.upper() in {'GET', 'HEAD'} else 1
+    for attempt in range(attempts):
+        try:
+            response = session.request(method, url, timeout=(60, 600), **kwargs)
+            break
+        except (requests.Timeout, requests.ConnectionError) as error:
+            if attempt + 1 == attempts:
+                raise RuntimeError(
+                    f'Zenodo HTTPS {method} {urlparse(url).path} failed '
+                    f'({type(error).__name__}). Check connectivity and the existing '
+                    'Zenodo drafts/state before resubmitting; writes are not retried automatically.'
+                ) from error
+            print(f'Zenodo connection failed ({type(error).__name__}); '
+                  f'retrying read-only request {attempt + 2}/{attempts}', flush=True)
+            time.sleep(2 ** attempt)
     if not response.ok:
         raise RuntimeError(f'Zenodo {response.status_code}: {response.text[:2500]}')
     return response.json()
@@ -65,9 +82,15 @@ def main():
     session = requests.Session()
     session.headers.update(Authorization='Bearer ' + token, **{'User-Agent': USER_AGENT})
     # Check all local bytes before creating or changing any remote record.
+    print('Verifying local release files', flush=True)
     for group in plan['deposits'].values():
         for file in group['files']:
             verify_local(file)
+    # Establish TLS with a safe request before the first record-creation POST.
+    # This also makes temporary connection failures retryable without duplicates.
+    print('Checking Zenodo HTTPS connection', flush=True)
+    request(session, 'GET', API + '/vocabularies/licenses/cc-by-4.0')
+    print('Zenodo HTTPS connection succeeded', flush=True)
     drafts = {}
     for name, group in plan['deposits'].items():
         previous = state['deposits'].get(name)
