@@ -1,0 +1,23 @@
+{
+  "metric_type": "fixed_seed_stochastic_mlm_loss",
+  "checkpoint_epoch": 200,
+  "checkpoint_global_step": 2088000,
+  "split": "test",
+  "total_split_rows": 431248,
+  "evaluated_rows": 431248,
+  "sequence_mode": "packed_poem_window",
+  "num_sequences": 42044,
+  "sequence_stats": {
+    "truncated_verses": 2,
+    "packed_sequences": 42044,
+    "poem_windows_emitted": 42044
+  },
+  "num_batches": 165,
+  "zero_mask_batches": 0,
+  "masked_token_count": 440547,
+  "mlm_probability": 0.15,
+  "seed": 13,
+  "batch_size": 256,
+  "mlm_loss": 1.6853442532495468,
+  "mlm_pseudo_ppl": 5.394307620673149
+}

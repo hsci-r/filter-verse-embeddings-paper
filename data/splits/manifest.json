@@ -1,0 +1,87 @@
+{
+  "poems_written": 291227,
+  "rows_written": 4311544,
+  "poems_by_split": {
+    "dev": 29109,
+    "test": 29325,
+    "train": 232793
+  },
+  "rows_by_split": {
+    "dev": 438303,
+    "test": 431248,
+    "train": 3441993
+  },
+  "retained_unassigned_rows": 4490,
+  "missing_pos_threshold": 0.5,
+  "drop_rule": "drop poem when missing_pos_fraction > threshold",
+  "suspicious_poems": 117,
+  "split_assignment_sha256": "faf5436838213654f41a0c2981cbb56e1cd9757d36badc5bc5da41cc5413f129",
+  "by_split_and_collection": {
+    "dev": {
+      "erab": {
+        "poems": 10776,
+        "retained_unassigned_rows": 145,
+        "rows": 199952
+      },
+      "jr": {
+        "poems": 8448,
+        "retained_unassigned_rows": 61,
+        "rows": 82476
+      },
+      "kr": {
+        "poems": 1052,
+        "retained_unassigned_rows": 16,
+        "rows": 19046
+      },
+      "skvr": {
+        "poems": 8833,
+        "retained_unassigned_rows": 152,
+        "rows": 136829
+      }
+    },
+    "test": {
+      "erab": {
+        "poems": 10870,
+        "retained_unassigned_rows": 149,
+        "rows": 198616
+      },
+      "jr": {
+        "poems": 8473,
+        "retained_unassigned_rows": 58,
+        "rows": 79676
+      },
+      "kr": {
+        "poems": 1054,
+        "retained_unassigned_rows": 8,
+        "rows": 19784
+      },
+      "skvr": {
+        "poems": 8928,
+        "retained_unassigned_rows": 112,
+        "rows": 133172
+      }
+    },
+    "train": {
+      "erab": {
+        "poems": 86213,
+        "retained_unassigned_rows": 1504,
+        "rows": 1599230
+      },
+      "jr": {
+        "poems": 67586,
+        "retained_unassigned_rows": 720,
+        "rows": 630790
+      },
+      "kr": {
+        "poems": 8424,
+        "retained_unassigned_rows": 155,
+        "rows": 151731
+      },
+      "skvr": {
+        "poems": 70570,
+        "retained_unassigned_rows": 1410,
+        "rows": 1060242
+      }
+    }
+  }
+}

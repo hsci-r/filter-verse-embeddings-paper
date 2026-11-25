@@ -1,0 +1,13 @@
+FILTER verse embeddings
+Copyright 2026 Lidia Pivovarova, Tinka Rainio and Eetu Mäkelä.
+
+Code accompanying:
+Leveraging LLM-Generated Translations to Guide Verse Representation Learning
+in Finnic Oral Poetry. Accepted to Findings of EACL 2027.
+
+Code: Apache License, Version 2.0 (LICENSE).
+Published model weights and tokenizer: CC BY 4.0, as specified in the model
+repository. Corpus data retain their applicable source licences.
+
+Please cite the accompanying paper; see CITATION.cff. The publication URL and
+identifier will be added when assigned by the ACL Anthology.

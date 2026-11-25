@@ -1,0 +1,82 @@
+{
+  "feature_id": "trained_finestscratch_v0p33_w0p33_mlm0p34_contextual",
+  "feature_kind": "trained_contextual",
+  "classifier": {
+    "type": "OneVsRestClassifier(SGDClassifier(log_loss))",
+    "alpha": 0.0001,
+    "max_iter": 100,
+    "class_weight": "balanced"
+  },
+  "metadata": {
+    "label": "finestscratch_v0p33_w0p33_mlm0p34",
+    "surface": "finestscratch",
+    "sem_config": "v0p33_w0p33_mlm0p34",
+    "epoch": "200",
+    "task_id": "1"
+  },
+  "label_coverage": {
+    "min_train_support": 51,
+    "num_labels": 26,
+    "total_primary_top_labels_train": 29,
+    "excluded_type_prefixes": [
+      "erab_orig"
+    ],
+    "splits": {
+      "train": {
+        "total_poems": 232793,
+        "poems_with_any_primary_top_label": 112777,
+        "poems_with_kept_primary_top_label": 112706,
+        "primary_top_label_assignments": 122751,
+        "kept_primary_top_label_assignments": 122680
+      },
+      "dev": {
+        "total_poems": 29109,
+        "poems_with_any_primary_top_label": 14136,
+        "poems_with_kept_primary_top_label": 14127,
+        "primary_top_label_assignments": 15360,
+        "kept_primary_top_label_assignments": 15351
+      },
+      "test": {
+        "total_poems": 29325,
+        "poems_with_any_primary_top_label": 14274,
+        "poems_with_kept_primary_top_label": 14267,
+        "primary_top_label_assignments": 15493,
+        "kept_primary_top_label_assignments": 15486
+      }
+    }
+  },
+  "dev": {
+    "micro_precision": 0.6404035076152172,
+    "micro_recall": 0.6327275096084946,
+    "micro_f1": 0.6365423684382987,
+    "macro_precision": 0.5056331823882761,
+    "macro_recall": 0.6245482290319367,
+    "macro_f1": 0.5172778511962435,
+    "subset_accuracy": 0.46980958448361293,
+    "mean_predicted_labels": 1.0736178948113542,
+    "mean_true_labels": 1.0866425992779782,
+    "hit_at_1": 0.7248531181425639,
+    "hit_at_3": 0.8981383166985205,
+    "hit_at_5": 0.9484674736320521,
+    "threshold": 0.8499999999999999,
+    "num_poems": 14127,
+    "num_labels": 26
+  },
+  "test": {
+    "micro_precision": 0.6410696599537802,
+    "micro_recall": 0.6269533772439623,
+    "micro_f1": 0.6339329437497959,
+    "macro_precision": 0.5066134794384187,
+    "macro_recall": 0.6221499236804406,
+    "macro_f1": 0.5191814297495767,
+    "subset_accuracy": 0.46639097217354736,
+    "mean_predicted_labels": 1.061540618209855,
+    "mean_true_labels": 1.0854419289268942,
+    "hit_at_1": 0.7234176771570757,
+    "hit_at_3": 0.9000490642741992,
+    "hit_at_5": 0.950935725800799,
+    "threshold": 0.8499999999999999,
+    "num_poems": 14267,
+    "num_labels": 26
+  }
+}

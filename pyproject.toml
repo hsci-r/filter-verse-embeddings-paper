@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "filter-verse-embeddings"
+version = "1.0.0"
+description = "Verse representations for Finnic oral poetry"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+dependencies = ["torch>=2.6", "numpy", "sentencepiece", "safetensors", "huggingface-hub"]
+
+[project.optional-dependencies]
+reproduction = ["pandas", "pyarrow", "scipy", "scikit-learn", "pyyaml", "tqdm", "transformers", "sentence-transformers", "matplotlib", "tensorboard"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

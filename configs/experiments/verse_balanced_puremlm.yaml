@@ -1,0 +1,66 @@
+run_name: verse_balanced_puremlm
+seed: 42
+data:
+  verses_path: artifacts/data/paper_verses.parquet
+  train_split: train
+  dev_split: dev
+  filter_text_column: filter_text
+  english_text_column: english_verse
+  word_analysis_path: artifacts/data/word_analysis_training.parquet
+tokenizer:
+  model_path: artifacts/data/tokenizers/verse_balanced/tokenizer.model
+  max_length: 128
+  add_bos: true
+  add_eos: true
+  mask_token: <mask>
+  verse_sep_token: <VERSE_SEP>
+model:
+  num_layers: 12
+  hidden_size: 768
+  num_heads: 12
+  ffn_dim: 3072
+  dropout: 0.5
+training:
+  device: auto
+  sequence_mode: packed_poem_window
+  batch_size: 32
+  eval_batch_size: 256
+  num_workers: 4
+  lr: 0.00025
+  use_scheduler: true
+  warmup_ratio: 0.02
+  min_lr_ratio: 0.1
+  weight_decay: 0.01
+  num_epochs: 200
+  mlm_probability: 0.15
+  gradient_clip: 0.25
+  log_every_steps: 1
+  projection_lr_multiplier: 1.0
+  keep_last_checkpoints: 10
+loss:
+  lambda_v: 0.0
+  lambda_w: 0.0
+  word_loss_scale: 10.0
+  temperature: 0.05
+  verse_warmup_fraction: 0.0
+  word_warmup_fraction: 0.0
+  contrastive_direction: symmetric
+teacher:
+  sentence_model_name: sentence-transformers/all-mpnet-base-v2
+  token_model_name: answerdotai/ModernBERT-base
+  device: auto
+  batch_size: 128
+  cache_dir: artifacts/cache/sentence_teacher
+  token_cache_dir: artifacts/cache/word_teacher
+  token_max_length: 512
+  token_chunk_rows: 128
+initialization:
+  checkpoint_path: null
+output:
+  run_dir: artifacts/runs/verse_balanced_puremlm
+  checkpoint_dir: artifacts/checkpoints/verse_balanced_puremlm
+  export_splits:
+  - dev
+  - test
+  export_batch_size: 512
+  tensorboard_dir: artifacts/tensorboard/verse_balanced_puremlm

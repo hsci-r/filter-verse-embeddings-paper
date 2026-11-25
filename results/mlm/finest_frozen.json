@@ -1,0 +1,24 @@
+{
+  "metric_type": "hf_fixed_seed_stochastic_mlm_loss",
+  "model_name": "EMBEDDIA/finest-bert",
+  "model_info": {
+    "model_type": "bert",
+    "architectures": [
+      "BertForMaskedLM"
+    ],
+    "has_declared_mlm": true
+  },
+  "split": "test",
+  "text_column": "filter_text",
+  "total_split_rows": 431248,
+  "evaluated_rows": 431248,
+  "num_batches": 1685,
+  "zero_mask_batches": 0,
+  "masked_token_count": 452084,
+  "max_length": 128,
+  "mlm_probability": 0.15,
+  "seed": 13,
+  "batch_size": 256,
+  "mlm_loss": 8.442477562234268,
+  "mlm_pseudo_ppl": 4640.036735090224
+}

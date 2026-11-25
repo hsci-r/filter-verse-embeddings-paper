@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "Please cite the accompanying paper when using this software, model, tokenizer, translations or embeddings."
+type: software
+title: FILTER verse embeddings
+version: 1.0.0
+url: https://github.com/hsci-r/filter-verse-embeddings-paper
+license: Apache-2.0
+authors:
+  - family-names: Pivovarova
+    given-names: Lidia
+  - family-names: Rainio
+    given-names: Tinka
+  - family-names: Mäkelä
+    given-names: Eetu
+preferred-citation:
+  type: conference-paper
+  title: Leveraging LLM-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry
+  authors:
+    - family-names: Pivovarova
+      given-names: Lidia
+    - family-names: Rainio
+      given-names: Tinka
+    - family-names: Mäkelä
+      given-names: Eetu
+  collection-title: "Findings of the Association for Computational Linguistics: EACL 2027"
+  year: 2027
