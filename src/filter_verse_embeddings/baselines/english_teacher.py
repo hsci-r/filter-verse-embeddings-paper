@@ -16,7 +16,7 @@ from filter_verse_embeddings.export_utils import l2_normalize, save_dense_embedd
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Export English translation embeddings from the fixed sentence teacher as both evaluator sides. Local retrieval is then English-only; translation retrieval is an identity sanity check.')
     parser.add_argument('--config', default='configs/experiments/verse_balanced_v0p45_w0p45_mlm0p10.yaml')
-    parser.add_argument('--verses-path', type=Path, default=None, help='Override config data.verses_path, useful for Phase-specific cleaned splits.')
+    parser.add_argument('--verses-path', type=Path, default=None, help='Override config data.verses_path with a frozen input snapshot.')
     parser.add_argument('--run-dir', type=Path, required=True)
     parser.add_argument('--splits', nargs='+', default=['test'])
     parser.add_argument('--teacher-device', default='auto')
@@ -77,7 +77,7 @@ def main() -> None:
         save_metadata(args.run_dir / 'metadata', split_df.assign(split=split_name))
         export_summary[split_name] = split_summary
     args.run_dir.mkdir(parents=True, exist_ok=True)
-    (args.run_dir / 'metadata.json').write_text(json.dumps({'run_name': args.run_dir.name, 'model_type': 'english_teacher_baseline', 'teacher_model_name': teacher_name, 'baseline_interpretation': 'English-only baseline: fixed teacher embeddings of English translations are used as FILTER-side embeddings for local retrieval and as both sides for translation retrieval. Translation retrieval is therefore an identity sanity check, not a cross-lingual score. Manual-test retrieval uses manual word-by-word translations on both sides as a human-reference identity sanity check, so it does not consume automatic translations.', 'export_summary': export_summary}, indent=2, ensure_ascii=True), encoding='utf-8')
+    (args.run_dir / 'metadata.json').write_text(json.dumps({'run_name': args.run_dir.name, 'model_type': 'english_teacher_baseline', 'teacher_model_name': teacher_name, 'baseline_interpretation': 'English-only baseline: fixed teacher embeddings of English translations are used as FILTER-side embeddings for local retrieval and as both sides for translation retrieval. Translation retrieval is therefore an identity sanity check, not a cross-lingual score.', 'export_summary': export_summary}, indent=2, ensure_ascii=True), encoding='utf-8')
     print(f'Wrote English-teacher baseline run to {args.run_dir}')
 if __name__ == '__main__':
     main()

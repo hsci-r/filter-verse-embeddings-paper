@@ -28,6 +28,9 @@ def main():
     cli = json.loads(cli_record.read_text())
     if not cli or any(item['exit_code'] for item in cli.values()):
         raise ValueError('Release CLI validation has not passed')
+    dependencies = json.loads((cli_record.parent / 'dependency_validation.json').read_text())
+    if dependencies.get('status') != 'passed':
+        raise ValueError('Reproduction dependency validation has not passed')
     for name, record in manifest['files'].items():
         path = root / name
         if path.stat().st_size != record['bytes'] or digest(path) != record['sha256']:

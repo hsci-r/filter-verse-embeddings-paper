@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "source_checkpoint_sha256": "6949355197038012c35fd9073282b18aff140a65d7391e6c0bb1f62e331894d7",
+  "exact_encoder_and_projection_tensors": true,
+  "tokenizer_bytes_identical": true,
+  "isolated_max_abs_difference": 1.4901161193847656e-08,
+  "contextual_max_abs_difference": 3.725290298461914e-08,
+  "contextual_test_windows": 21,
+  "checked_batch_boundaries": true,
+  "checked_long_verse_truncation": true,
+  "checked_empty_inputs": true,
+  "versions": {
+    "torch": "2.13.0+cpu",
+    "numpy": "2.5.2",
+    "sentencepiece": "0.2.2",
+    "safetensors": "0.8.0",
+    "huggingface-hub": "1.28.0"
+  }
+}

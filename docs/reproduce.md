@@ -12,7 +12,7 @@ The selected public word-analysis Parquet has 14,618,529 rows with corpus coordi
 
 The supplied split manifest records 232,793 / 29,109 / 29,325 poems and 3,441,993 / 438,303 / 431,248 verse rows for train / development / test. Keep 4,490 retained unassigned translation rows, including their nullable positions. The cleaning rule excludes a poem only when more than 50 percent of its translation rows lack source positions.
 
-The public isolated and contextual embedding tables each contain 4,275,969 rows, with columns `p_id`, `pos`, `v_id` and `embedding`. The embedding column stores lists of 768 float32 values. These corpus occurrence coordinates differ from the paper's string IDs. Join `p_id` to `metadata/poems.parquet` (`p_id` to archival `nro`); `v_id` identifies a verse text and can recur in multiple occurrences. Keep occurrence coordinates and the original row order when comparing the two embedding tables.
+The public isolated and contextual embedding tables each contain 4,275,969 rows, with columns `p_id`, `pos`, `v_id` and `embedding`. The embedding column stores lists of 768 float32 values. These corpus occurrence coordinates differ from the paper's string IDs. Join `p_id` to `metadata/poems.parquet` (`p_id` to archival `nro`); `v_id` identifies a verse text and can recur in multiple occurrences. Compare the tables using their supplied occurrence identifiers. The release audit records identity coverage and row order separately; their positional alignment is still under review.
 
 ## Training
 

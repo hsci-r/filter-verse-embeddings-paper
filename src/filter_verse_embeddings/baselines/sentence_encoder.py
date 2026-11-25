@@ -16,7 +16,7 @@ from filter_verse_embeddings.export_utils import l2_normalize, save_dense_embedd
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Encode FILTER text and English translations with the same frozen SentenceTransformer and write the standard evaluator run layout.')
     parser.add_argument('--config', default='configs/experiments/verse_balanced_v0p45_w0p45_mlm0p10.yaml')
-    parser.add_argument('--verses-path', type=Path, default=None, help='Override config data.verses_path, useful for Phase-specific cleaned splits.')
+    parser.add_argument('--verses-path', type=Path, default=None, help='Override config data.verses_path with a frozen input snapshot.')
     parser.add_argument('--model-name', required=True)
     parser.add_argument('--run-dir', type=Path, required=True)
     parser.add_argument('--splits', nargs='+', default=['test'])
