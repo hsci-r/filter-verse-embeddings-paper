@@ -4,6 +4,8 @@ Code and experiment configurations for **Leveraging LLM-Generated Translations t
 
 The selected model learns 768-dimensional verse representations using masked language modelling and alignment to English teacher embeddings. It uses a verse-balanced 32k SentencePiece tokenizer, loss weights 0.45 verse / 0.45 word / 0.10 MLM, and the checkpoint after 200 epochs.
 
+Release preparation is in progress. Source and saved paper results are available here; the Hugging Face model files and permanent Zenodo records will be linked after packaging and validation finish. See the reproduction notes for remaining provenance limitations.
+
 ## Use the model
 
 Install this package in an environment with PyTorch:
