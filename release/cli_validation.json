@@ -1,0 +1,59 @@
+{
+  "training": {
+    "exit_code": 0
+  },
+  "prepare_data": {
+    "exit_code": 0
+  },
+  "prepare_words": {
+    "exit_code": 0
+  },
+  "export_evaluation": {
+    "exit_code": 0
+  },
+  "export_embeddings": {
+    "exit_code": 0
+  },
+  "evaluation.retrieval": {
+    "exit_code": 0
+  },
+  "evaluation.build_benchmark": {
+    "exit_code": 0
+  },
+  "evaluation.mlm": {
+    "exit_code": 0
+  },
+  "evaluation.mlm_baseline": {
+    "exit_code": 0
+  },
+  "evaluation.poem_types": {
+    "exit_code": 0
+  },
+  "evaluation.tokenizer_lengths": {
+    "exit_code": 0
+  },
+  "tokenizers.train": {
+    "exit_code": 0
+  },
+  "tokenizers.balance": {
+    "exit_code": 0
+  },
+  "baselines.sentence_encoder": {
+    "exit_code": 0
+  },
+  "baselines.hf_encoder": {
+    "exit_code": 0
+  },
+  "baselines.english_teacher": {
+    "exit_code": 0
+  },
+  "baselines.modernbert_contextual": {
+    "exit_code": 0
+  },
+  "figures.retrieval": {
+    "exit_code": 0
+  },
+  "figures.mlm": {
+    "exit_code": 0
+  }
+}

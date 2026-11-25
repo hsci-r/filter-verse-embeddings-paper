@@ -1,0 +1,199 @@
+{
+  "isolated": {
+    "rows": 4275969,
+    "id_columns": [
+      "p_id",
+      "pos",
+      "v_id"
+    ],
+    "sampled_vectors": {
+      "embedding": {
+        "dimension": 768,
+        "sampled_rows": 1024,
+        "norm_min": 0.9999998807907104,
+        "norm_max": 1.0000001192092896,
+        "dtype": "float"
+      }
+    },
+    "null_ids": {
+      "p_id": 0,
+      "pos": 0,
+      "v_id": 0
+    },
+    "duplicate_occurrence_coordinates": 0
+  },
+  "contextual": {
+    "rows": 4275969,
+    "id_columns": [
+      "p_id",
+      "pos",
+      "v_id"
+    ],
+    "sampled_vectors": {
+      "embedding": {
+        "dimension": 768,
+        "sampled_rows": 1024,
+        "norm_min": 0.9999998211860657,
+        "norm_max": 1.0000001192092896,
+        "dtype": "float"
+      }
+    },
+    "null_ids": {
+      "p_id": 0,
+      "pos": 0,
+      "v_id": 0
+    },
+    "duplicate_occurrence_coordinates": 0
+  },
+  "isolated_contextual_ids_identical": false,
+  "same_identity_multiset": true,
+  "column_comparisons": {
+    "p_id": {
+      "equal_rows": 3704889,
+      "different_rows": 571080
+    },
+    "pos": {
+      "equal_rows": 3757437,
+      "different_rows": 518532
+    },
+    "v_id": {
+      "equal_rows": 4275969,
+      "different_rows": 0
+    }
+  },
+  "first_mismatched_rows": [
+    {
+      "row": 24,
+      "isolated": {
+        "p_id": 131,
+        "pos": 21,
+        "v_id": 21
+      },
+      "contextual": {
+        "p_id": 157,
+        "pos": 21,
+        "v_id": 21
+      }
+    },
+    {
+      "row": 25,
+      "isolated": {
+        "p_id": 157,
+        "pos": 21,
+        "v_id": 21
+      },
+      "contextual": {
+        "p_id": 131,
+        "pos": 21,
+        "v_id": 21
+      }
+    },
+    {
+      "row": 32,
+      "isolated": {
+        "p_id": 284343,
+        "pos": 848,
+        "v_id": 26
+      },
+      "contextual": {
+        "p_id": 284318,
+        "pos": 528,
+        "v_id": 26
+      }
+    },
+    {
+      "row": 34,
+      "isolated": {
+        "p_id": 284318,
+        "pos": 528,
+        "v_id": 26
+      },
+      "contextual": {
+        "p_id": 284343,
+        "pos": 848,
+        "v_id": 26
+      }
+    },
+    {
+      "row": 63,
+      "isolated": {
+        "p_id": 1,
+        "pos": 53,
+        "v_id": 53
+      },
+      "contextual": {
+        "p_id": 681,
+        "pos": 2,
+        "v_id": 53
+      }
+    },
+    {
+      "row": 64,
+      "isolated": {
+        "p_id": 681,
+        "pos": 2,
+        "v_id": 53
+      },
+      "contextual": {
+        "p_id": 1,
+        "pos": 53,
+        "v_id": 53
+      }
+    },
+    {
+      "row": 65,
+      "isolated": {
+        "p_id": 681,
+        "pos": 3,
+        "v_id": 54
+      },
+      "contextual": {
+        "p_id": 1,
+        "pos": 54,
+        "v_id": 54
+      }
+    },
+    {
+      "row": 66,
+      "isolated": {
+        "p_id": 1,
+        "pos": 54,
+        "v_id": 54
+      },
+      "contextual": {
+        "p_id": 681,
+        "pos": 3,
+        "v_id": 54
+      }
+    },
+    {
+      "row": 69,
+      "isolated": {
+        "p_id": 1,
+        "pos": 56,
+        "v_id": 56
+      },
+      "contextual": {
+        "p_id": 681,
+        "pos": 5,
+        "v_id": 56
+      }
+    },
+    {
+      "row": 70,
+      "isolated": {
+        "p_id": 681,
+        "pos": 5,
+        "v_id": 56
+      },
+      "contextual": {
+        "p_id": 1,
+        "pos": 56,
+        "v_id": 56
+      }
+    }
+  ],
+  "status": "identity_coverage_verified",
+  "alignment_file": "row_alignment.parquet",
+  "join_instruction": "Join by identity columns; row numbers differ between the two original tables."
+}
