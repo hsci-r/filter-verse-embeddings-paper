@@ -1,0 +1,39 @@
+{
+  "publication_date": "2026-11-25",
+  "creators": [
+    {
+      "name": "Pivovarova, Lidia"
+    },
+    {
+      "name": "Rainio, Tinka"
+    },
+    {
+      "name": "Mäkelä, Eetu"
+    }
+  ],
+  "access_right": "open",
+  "version": "1.0.0",
+  "keywords": [
+    "Finnic oral poetry",
+    "verse embeddings",
+    "LLM translations",
+    "FILTER"
+  ],
+  "references": [
+    "Lidia Pivovarova, Tinka Rainio, and Eetu Mäkelä. Leveraging LLM-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry. Accepted to Findings of EACL 2027."
+  ],
+  "title": "FILTER verse embeddings: isolated and contextual precomputed embeddings",
+  "upload_type": "dataset",
+  "license": "cc-by-4.0",
+  "description": "<p>Precomputed float32, 768-dimensional embeddings from the selected verse-balanced model. Each original Parquet contains 4,275,969 occurrences identified by p_id, pos and v_id. Isolated and contextual tables cover exactly the same occurrence IDs in different row orders. The row_alignment.parquet file maps zero-based row indices; coverage.json records the audit. Original Parquet bytes are preserved. Includes source receipts, manifests and checksums. Embeddings are CC BY 4.0; original corpus identifiers and metadata retain their upstream terms.</p>",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/hsci-r/filter-verse-embeddings-paper",
+      "relation": "isDocumentedBy"
+    },
+    {
+      "identifier": "https://huggingface.co/University-of-Helsinki/filter-verse-embeddings/tree/f046b4fe36b1ba0c01652c723a34c26da1caaece",
+      "relation": "references"
+    }
+  ]
+}

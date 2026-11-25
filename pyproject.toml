@@ -11,6 +11,7 @@ license = {text = "Apache-2.0"}
 dependencies = ["torch>=2.6", "numpy", "sentencepiece", "safetensors", "huggingface-hub"]
 
 [project.optional-dependencies]
+release = ["requests"]
 reproduction = ["pandas", "pyarrow", "scipy", "scikit-learn", "pyyaml", "tqdm", "transformers", "sentence-transformers", "matplotlib", "tensorboard"]
 
 [tool.setuptools.packages.find]

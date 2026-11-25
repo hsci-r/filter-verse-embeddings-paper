@@ -1,0 +1,39 @@
+{
+  "publication_date": "2026-11-25",
+  "creators": [
+    {
+      "name": "Pivovarova, Lidia"
+    },
+    {
+      "name": "Rainio, Tinka"
+    },
+    {
+      "name": "Mäkelä, Eetu"
+    }
+  ],
+  "access_right": "open",
+  "version": "1.0.0",
+  "keywords": [
+    "Finnic oral poetry",
+    "verse embeddings",
+    "LLM translations",
+    "FILTER"
+  ],
+  "references": [
+    "Lidia Pivovarova, Tinka Rainio, and Eetu Mäkelä. Leveraging LLM-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry. Accepted to Findings of EACL 2027."
+  ],
+  "title": "FILTER verse embeddings: best model and tokenizer",
+  "upload_type": "other",
+  "license": "cc-by-4.0",
+  "description": "<p>The selected epoch-200 encoder and matching verse-balanced 32k SentencePiece tokenizer for <em>Leveraging LLM-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry</em>. Includes projected 768-dimensional isolated and contextual inference, model weights, learned projections, tokenizer, native loader, configuration, model card, checksums and numerical equivalence records. The package matches the published Hugging Face release. Weights and tokenizer are CC BY 4.0; included loader code is Apache-2.0. See the licence files inside the archive.</p>",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/hsci-r/filter-verse-embeddings-paper",
+      "relation": "isDocumentedBy"
+    },
+    {
+      "identifier": "https://huggingface.co/University-of-Helsinki/filter-verse-embeddings/tree/f046b4fe36b1ba0c01652c723a34c26da1caaece",
+      "relation": "references"
+    }
+  ]
+}

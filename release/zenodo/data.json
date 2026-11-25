@@ -1,0 +1,39 @@
+{
+  "publication_date": "2026-11-25",
+  "creators": [
+    {
+      "name": "Pivovarova, Lidia"
+    },
+    {
+      "name": "Rainio, Tinka"
+    },
+    {
+      "name": "Mäkelä, Eetu"
+    }
+  ],
+  "access_right": "open",
+  "version": "1.0.0",
+  "keywords": [
+    "Finnic oral poetry",
+    "verse embeddings",
+    "LLM translations",
+    "FILTER"
+  ],
+  "references": [
+    "Lidia Pivovarova, Tinka Rainio, and Eetu Mäkelä. Leveraging LLM-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry. Accepted to Findings of EACL 2027."
+  ],
+  "title": "FILTER verse embeddings: DeepSeek 3 translations, word analyses and paper data",
+  "upload_type": "dataset",
+  "license": "cc-by-4.0",
+  "description": "<p>Archived DeepSeek 3 verse translations and word analyses in their existing public Parquet format, plus the exact cleaned paper snapshot (4,311,544 rows; 291,227 poems). The support archive contains frozen split assignments, retrieval positives, tokenizers, corpus metadata and cleaning provenance. Generated translations, analyses and release-specific processing outputs are CC BY 4.0; original corpus text and metadata retain their upstream terms. The public word table has 14,618,529 rows; its original training word IDs and row order remain unverified, as documented in README.md and readiness.json. These existing artifacts are preserved without regenerating translations.</p>",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/hsci-r/filter-verse-embeddings-paper",
+      "relation": "isDocumentedBy"
+    },
+    {
+      "identifier": "https://huggingface.co/University-of-Helsinki/filter-verse-embeddings/tree/f046b4fe36b1ba0c01652c723a34c26da1caaece",
+      "relation": "references"
+    }
+  ]
+}

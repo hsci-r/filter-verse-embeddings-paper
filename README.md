@@ -12,13 +12,14 @@ Install this package in an environment with PyTorch:
 pip install .
 ```
 
-The model and matching tokenizer are published together at [University-of-Helsinki/filter-verse-embeddings](https://huggingface.co/University-of-Helsinki/filter-verse-embeddings). Once the model files have been uploaded:
+The model and matching tokenizer are published together at [University-of-Helsinki/filter-verse-embeddings](https://huggingface.co/University-of-Helsinki/filter-verse-embeddings):
 
 ```python
 from filter_verse_embeddings import FilterVerseEncoder
 
 model = FilterVerseEncoder.from_pretrained(
     "University-of-Helsinki/filter-verse-embeddings",
+    revision="f046b4fe36b1ba0c01652c723a34c26da1caaece",
     device="cpu",
 )
 verses = ["Metsä tuulessa laulaa.", "Joki kantaa illan valon."]
@@ -38,6 +39,6 @@ The exact cleaned paper data contains 291,227 poems and 4,311,544 rows. Existing
 
 ## Licence and citation
 
-The code is licensed under **Apache-2.0**. The published best-model weights and matching tokenizer are licensed under **CC BY 4.0**, requiring appropriate attribution, a licence link and an indication of changes. Source corpus data and translations retain their applicable source licences; the code licence does not relicense them.
+The code is licensed under **Apache-2.0**. The published best-model weights, matching tokenizer, generated translations, word analyses and computed embeddings are licensed under **CC BY 4.0**, requiring appropriate attribution, a licence link and an indication of changes. Original corpus text and upstream metadata retain their applicable source terms.
 
 Please cite the paper when using the code, model, tokenizer, translations or embeddings. The requested citation is recorded in [CITATION.cff](CITATION.cff). Publication in the ACL Anthology is pending; no paper DOI or Anthology identifier is asserted here.

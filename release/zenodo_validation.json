@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "publisher_tests": [
+    "all_files_verified_before_publication",
+    "resume_without_duplicate_records",
+    "local_and_remote_checksum_failures_stop_publication"
+  ],
+  "licence_vocabulary_verified": [
+    "apache-2.0",
+    "cc-by-4.0"
+  ],
+  "published_hf_manifest_matches_local": true,
+  "hf_revision": "f046b4fe36b1ba0c01652c723a34c26da1caaece",
+  "metadata_templates": 4
+}

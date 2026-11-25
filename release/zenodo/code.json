@@ -1,0 +1,39 @@
+{
+  "publication_date": "2026-11-25",
+  "creators": [
+    {
+      "name": "Pivovarova, Lidia"
+    },
+    {
+      "name": "Rainio, Tinka"
+    },
+    {
+      "name": "Mäkelä, Eetu"
+    }
+  ],
+  "access_right": "open",
+  "version": "1.0.0",
+  "keywords": [
+    "Finnic oral poetry",
+    "verse embeddings",
+    "LLM translations",
+    "FILTER"
+  ],
+  "references": [
+    "Lidia Pivovarova, Tinka Rainio, and Eetu Mäkelä. Leveraging LLM-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry. Accepted to Findings of EACL 2027."
+  ],
+  "title": "FILTER verse embeddings: paper code and reproducibility resources",
+  "upload_type": "software",
+  "license": "apache-2.0",
+  "description": "<p>Complete versioned source archive accompanying <em>Leveraging LLM-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry</em>, accepted to Findings of EACL 2027. Includes the native model loader, training and evaluation code, 20 final experiment configurations, frozen poem split lists, saved results, figures, documentation, citation and licences. The archive manifest identifies the exact Git commit and checksums. Original training-environment revisions and the ordered word-supervision input are incompletely preserved; see docs/reproduce.md. No paper DOI has been assigned.</p>",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/hsci-r/filter-verse-embeddings-paper",
+      "relation": "isDocumentedBy"
+    },
+    {
+      "identifier": "https://huggingface.co/University-of-Helsinki/filter-verse-embeddings/tree/f046b4fe36b1ba0c01652c723a34c26da1caaece",
+      "relation": "references"
+    }
+  ]
+}
