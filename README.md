@@ -2,6 +2,8 @@
 
 Resources for **Leveraging LLM-Generated Translations to Guide Verse Representation Learning in Finnic Oral Poetry**, by Lidia Pivovarova, Tinka Rainio and Eetu Mäkelä. Accepted to **Findings of EACL 2027**.
 
+![Overview of the runosong verse embedding model](paper-overview.svg)
+
 ## Resources
 
 | Resource | Link |
@@ -28,7 +30,7 @@ from filter_verse_embeddings import FilterVerseEncoder
 model = FilterVerseEncoder.from_pretrained(
     "University-of-Helsinki/filter-verse-embeddings", device="cpu"
 )
-verses = ["Metsä tuulessa laulaa.", "Joki kantaa illan valon."]
+verses = ["Ite vanha Väinämöinen", "Vesti vuorella venettä."]
 isolated = model.encode_verses(verses)
 contextual = model.encode_poem(verses)
 # Both arrays have shape (2, 768).
